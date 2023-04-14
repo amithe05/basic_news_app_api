@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "586607781199",
+    "project_id": "letmegrab-532e2",
+    "storage_bucket": "letmegrab-532e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586607781199:android:328cb53cd4c207aa6c913a",
+        "android_client_info": {
+          "package_name": "com.example.letmegrab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586607781199-r1us61iph4qcprtblapcukqj5g7scm9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJfNyo2h8gexMjTuywj1fTKn8KVW85-DE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586607781199-r1us61iph4qcprtblapcukqj5g7scm9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:letmegrab/homescreen.dart';
 import 'package:letmegrab/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,9 +11,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future loginnow() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+      return true;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
+
   final _formkey = GlobalKey<FormState>();
-  String? email;
-  String? password;
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 15.0,
                   ),
                   TextFormField(
-                    decoration: inputDecoration.copyWith(
-                      label: const Text("Email")
-                    ),
+                    decoration:
+                        inputDecoration.copyWith(label: const Text("Email")),
                     cursorColor: Colors.black,
                     onChanged: (value) {
                       setState(() {
@@ -51,10 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 19.0,
                   ),
                   TextFormField(
-                     decoration: inputDecoration.copyWith(
-                      label: const Text("password")
-                    ),
-      
+                    decoration:
+                        inputDecoration.copyWith(label: const Text("password")),
                     obscureText: true,
                     cursorColor: Colors.black,
                     onChanged: (value) {
@@ -81,7 +93,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0))),
-                        onPressed: () {},
+                        onPressed: () {
+                          loginnow().then((value) {
+                            if (value = true) {
+                             Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                            }
+                          });
+                        },
                         child: const Text("Log in")),
                   ),
                 ],
