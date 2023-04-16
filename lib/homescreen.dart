@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:letmegrab/detailscreen.dart';
 import 'package:letmegrab/models.dart';
@@ -36,15 +37,31 @@ class _HomeScreenState extends State<HomeScreen> {
       return NewsItem.fromJson(data);
     }
   }
+  void _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context)
+    .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title:const Text("Latest updates"),
+      actions: [
+        IconButton(onPressed: _signOut
+
+
+        , icon: const Icon(Icons.logout_outlined
+      ))
+      ],
+      ),
         body: SafeArea(
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 6, right: 6),
+                margin: const EdgeInsets.only(left: 6, right: 6,top: 15),
                 child: TextField(
                   decoration: const InputDecoration(
                   
