@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.pinkAccent,
-        focusColor: Colors.pinkAccent
+        focusColor: Colors.pinkAccent,
+        appBarTheme: AppBarTheme(color: Colors.pinkAccent)
 
       ),
       debugShowCheckedModeBanner: false,
