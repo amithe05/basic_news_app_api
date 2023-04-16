@@ -9,7 +9,7 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: const Text('News Details'),
+        title: const Text('read more'),
       ),
       body: SingleChildScrollView(
         child: Column(

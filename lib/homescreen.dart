@@ -37,37 +37,43 @@ class _HomeScreenState extends State<HomeScreen> {
       return NewsItem.fromJson(data);
     }
   }
+
   void _signOut() async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context)
-    .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:const Text("Latest updates"),
-      actions: [
-        IconButton(onPressed: _signOut
-
-
-        , icon: const Icon(Icons.logout_outlined
-      ))
-      ],
-      ),
+        appBar: AppBar(
+          title: const Text("Latest updates"),
+          actions: [
+            IconButton(
+                onPressed: _signOut, icon: const Icon(Icons.logout_outlined))
+          ],
+        ),
         body: SafeArea(
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 6, right: 6,top: 15),
+                margin: const EdgeInsets.only(left: 6, right: 6, top: 15),
                 child: TextField(
                   decoration: const InputDecoration(
-                  
+                    iconColor: Colors.pinkAccent,
+                    
                     labelText: 'category',
                     prefixIcon: Icon(Icons.search),
-                    border:  OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.pinkAccent,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
+                    ),
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(25),
                       ),
@@ -106,7 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   CachedNetworkImage(
                                     imageUrl:
-                                        snapshot.data?.data[index].imageUrl ?? "",
+                                        snapshot.data?.data[index].imageUrl ??
+                                            "",
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       width: 80,
@@ -127,7 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: Colors.grey,
                                       ),
                                       child: const Center(
-                                          child: CircularProgressIndicator()),
+                                          child: CircularProgressIndicator(
+                                        color: Colors.pinkAccent,
+                                        strokeWidth: 2,
+                                      )),
                                     ),
                                     errorWidget: (context, url, error) =>
                                         Container(
@@ -147,7 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          snapshot.data?.data[index].title ?? "",
+                                          snapshot.data?.data[index].title ??
+                                              "",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
