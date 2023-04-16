@@ -10,23 +10,53 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+   final _formkey = GlobalKey<FormState>();
+  late String email;
+  late String password;
+   String _errorMessage = '';
+
   Future loginnow() async {
+    if (!_formkey.currentState!.validate()) {
+      return;
+    }
+
+ 
+ _formkey.currentState!.save();
+
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email.trim(),
-        password: password.trim(),
+        email:email.trim(),
+        password:password.trim(),
       );
-      return true;
+       Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (e) {
-      return e.message;
-    }
+      if (e.code == 'user-not-found') {
+        setState(() {
+          _errorMessage = 'No user found for that email.';
+        });
+      } else if (e.code == 'wrong-password') {
+        setState(() {
+          _errorMessage = 'Wrong password provided for that user.';
+        });
+      } else {
+        setState(() {
+          _errorMessage = 'Something went wrong. Please try again later.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Something went wrong. Please try again later.';
+      });
+    
+
   }
 
-  final _formkey = GlobalKey<FormState>();
-  late String email;
-  late String password;
+ 
+   
+  }
 
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +111,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                   ),
+                 const SizedBox(height: 12,),
+                  if ( _errorMessage.isNotEmpty)
+                  Text(
+                    _errorMessage,
+                    style:const TextStyle(color: Colors.red),
+                  ),
                   const SizedBox(
                     height: 19.0,
                   ),
@@ -92,13 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0))),
-                        onPressed: () {
-                          loginnow().then((value) {
-                            if (value = true) {
-                             Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-                            }
-                          });
-                        },
+                        onPressed: loginnow,
                         child: const Text("Log in")),
                   ),
                 ],
@@ -108,3 +138,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+  
